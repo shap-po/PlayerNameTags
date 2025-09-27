@@ -1,6 +1,5 @@
 package me.gonkas.playernametags.util;
 
-import me.gonkas.playernametags.PlayerNameTags;
 import me.gonkas.playernametags.handlers.ConfigHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
