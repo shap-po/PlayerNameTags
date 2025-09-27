@@ -195,6 +195,21 @@ public class NameTagHandler implements Listener {
     }
 
     @EventHandler
+    public static void onWorldChange(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+        Location to = event.getTo();
+
+        if (to.getWorld() == player.getWorld()) {return;}
+
+        ArmorStand stand = PLAYERSTANDS.get(player);
+        stand.teleport(to);
+
+        Bukkit.getScheduler().runTaskLater(INSTANCE, () -> {
+            if (!player.addPassenger(stand)) {consoleWarn("Unable to anchor armor stand onto player '%s'.", player.getName());}
+        }, 10);
+    }
+
+    @EventHandler
     public static void onPlayerCrouch(PlayerToggleSneakEvent event) {
         if (!PLUGINISLOADED) return;
 
