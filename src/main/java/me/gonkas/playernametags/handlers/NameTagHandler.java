@@ -128,7 +128,7 @@ public class NameTagHandler implements Listener {
         forceConfigChanges(player);
         toggleNameTag(player, !isNameTagHidden);
 
-        TEAM.addPlayer(player);
+        if (ConfigHandler.getJoinTeam()) {TEAM.addPlayer(player);}
         player.playerListName(nick);
         player.displayName(nick);
 

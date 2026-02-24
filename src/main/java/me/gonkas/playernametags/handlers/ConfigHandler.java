@@ -13,6 +13,7 @@ public class ConfigHandler {
     private static int MAXSUFFIXLENGTH;
     private static boolean ALLOWCOLORS;
     private static boolean ALLOWFORMATTING;
+    private static boolean JOINTEAM;
 
     private static final String VALIDCHARSPATH = "valid-name-characters";
     private static final String MAXNAMELENGTHPATH = "max-name-length";
@@ -20,6 +21,7 @@ public class ConfigHandler {
     private static final String MAXSUFFIXLENGTHPATH = "max-suffix-length";
     private static final String ALLOWCOLORSPATH = "enable-colors";
     private static final String ALLOWFORMATTINGPATH = "enable-formatting";
+    private static final String JOINTEAMPATH = "join-team";
 
     private static final String DEFAULTCHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_.,+-/*!?' ";
     private static final int DEFAULTNAMELENGTH = 16;
@@ -27,6 +29,7 @@ public class ConfigHandler {
     private static final int DEFAULTSUFFIXLENGTH = 8;
     private static final boolean DEFAULTALLOWCOLORS = true;
     private static final boolean DEFAULTALLOWFORMATTING = true;
+    private static final boolean DEFAULTJOINTEAM = true;
 
     public static void load() {
         fixConfigPaths(CONFIG);
@@ -37,6 +40,7 @@ public class ConfigHandler {
         MAXSUFFIXLENGTH = CONFIG.getInt(MAXSUFFIXLENGTHPATH);
         ALLOWCOLORS = CONFIG.getBoolean(ALLOWCOLORSPATH);
         ALLOWFORMATTING = CONFIG.getBoolean(ALLOWFORMATTINGPATH);
+        JOINTEAM = CONFIG.getBoolean(JOINTEAMPATH);
     }
     
     public static void unload() {
@@ -45,7 +49,7 @@ public class ConfigHandler {
         CONFIG.set(MAXPREFIXLENGTHPATH, MAXPREFIXLENGTH);
         CONFIG.set(MAXSUFFIXLENGTHPATH, MAXSUFFIXLENGTH);
         CONFIG.set(ALLOWCOLORSPATH, ALLOWCOLORS);
-        CONFIG.set(ALLOWFORMATTINGPATH, ALLOWFORMATTING);
+        CONFIG.set(JOINTEAMPATH, JOINTEAM);
     }
 
     // Fixes any used config paths that are broken or missing.
@@ -56,6 +60,7 @@ public class ConfigHandler {
         if (!pathIsInteger(config, MAXSUFFIXLENGTHPATH)) config.set(MAXSUFFIXLENGTHPATH, DEFAULTSUFFIXLENGTH);
         if (!pathIsBoolean(config, ALLOWCOLORSPATH)) config.set(ALLOWCOLORSPATH, DEFAULTALLOWCOLORS);
         if (!pathIsBoolean(config, ALLOWFORMATTINGPATH)) config.set(ALLOWFORMATTINGPATH, DEFAULTALLOWFORMATTING);
+        if (!pathIsBoolean(config, JOINTEAMPATH)) config.set(JOINTEAMPATH, DEFAULTJOINTEAM);
     }
 
     private static boolean pathIsString(FileConfiguration config, String path) {return config.contains(path) && config.get(path) instanceof String;}
@@ -91,6 +96,10 @@ public class ConfigHandler {
     public static boolean getAllowFormatting() {return ALLOWFORMATTING;}
     public static void setAllowFormatting(boolean value) {ALLOWFORMATTING = value;}
     public static boolean resetAllowFormatting() {ALLOWFORMATTING = DEFAULTALLOWFORMATTING; return ALLOWFORMATTING;}
+
+    public static boolean getJoinTeam() {return JOINTEAM;}
+    public static void setJoinTeam(boolean value) {JOINTEAM = value;}
+    public static boolean resetJoinTeam() {JOINTEAM = DEFAULTJOINTEAM; return JOINTEAM;}
 
     public static String getFormattingCharacters() {
         StringBuilder builder = new StringBuilder();

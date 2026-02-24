@@ -18,3 +18,6 @@ enable-colors: true
 
 # Whether bold, italic, strikethrough, underlined, and obfuscated texts are enabled or not
 enable-formatting: true
+
+# Whether to auto-join players to the PlayerNameTags team or not
+join-team: true
