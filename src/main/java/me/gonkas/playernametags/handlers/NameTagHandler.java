@@ -254,7 +254,10 @@ public class NameTagHandler implements Listener {
     @EventHandler
     public static void onPlayerRespawn(PlayerRespawnEvent event) {
         if (!PLUGINISLOADED) return;
-        event.getPlayer().addPassenger(PLAYERSTANDS.get(event.getPlayer()));
+
+        Bukkit.getScheduler().runTaskLater(INSTANCE, () -> {
+            if (event.getPlayer().addPassenger(PLAYERSTANDS.get(event.getPlayer()))) {consoleWarn("Unable to anchor armor stand onto player '%s'.", event.getPlayer().getName());}
+        }, 10);
     }
 
     // ----------------------------------------------------------------------------------------------------------------------------------------------
