@@ -12,6 +12,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDismountEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
@@ -31,6 +32,7 @@ public class NameTagHandler implements Listener {
     private static final HashMap<Player, ArrayList<String>> PLAYERNAMES = new HashMap<>(0);
     private static final HashMap<Player, Boolean> PLAYERNAMESTOGGLE = new HashMap<>(0);
     private static final HashMap<Player, ArmorStand> PLAYERSTANDS = new HashMap<>(0);
+    private static final HashMap<ArmorStand, Player> STANDPLAYERS = new HashMap<>(0);
 
     private static final HashMap<String, Map<TextType, String>> OFFLINEPLAYERNAMES = new HashMap<>(0);
     private static final HashMap<String, Boolean> OFFLINEPLAYERTOGGLE = new HashMap<>(0);
@@ -98,6 +100,7 @@ public class NameTagHandler implements Listener {
 
         PLAYERNAMES.remove(player);
         PLAYERNAMESTOGGLE.remove(player);
+        STANDPLAYERS.remove(PLAYERSTANDS.get(player));
         PLAYERSTANDS.get(player).remove();
         PLAYERSTANDS.remove(player);
 
@@ -124,6 +127,7 @@ public class NameTagHandler implements Listener {
         if (!player.addPassenger(stand)) {consoleWarn("Unable to anchor armor stand onto player '%s'.", player.getName());}
 
         PLAYERSTANDS.put(player, stand);
+        STANDPLAYERS.put(stand, player);
         setFullName(player, prefix, name, suffix);
         forceConfigChanges(player);
         toggleNameTag(player, !isNameTagHidden);
@@ -257,6 +261,18 @@ public class NameTagHandler implements Listener {
 
         Bukkit.getScheduler().runTaskLater(INSTANCE, () -> {
             if (event.getPlayer().addPassenger(PLAYERSTANDS.get(event.getPlayer()))) {consoleWarn("Unable to anchor armor stand onto player '%s'.", event.getPlayer().getName());}
+        }, 10);
+    }
+
+    @EventHandler
+    public static void onEntityDismount(EntityDismountEvent event) {
+        if (!PLUGINISLOADED) return;
+
+        if (!(event.getEntity() instanceof ArmorStand armorStand)) return;
+        Player player = STANDPLAYERS.get(armorStand);
+        if (player == null) return;
+        Bukkit.getScheduler().runTaskLater(INSTANCE, () -> {
+            if (player.addPassenger(armorStand)) {consoleWarn("Unable to anchor armor stand onto player '%s'.", player.getName());}
         }, 10);
     }
 
