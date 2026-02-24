@@ -216,7 +216,7 @@ public class NameTagHandler implements Listener {
 
         Player player = event.getPlayer();
         if (event.isCancelled() || player.isInvisible() || player.isFlying() || isNameTagToggled(player)) return;
-        if (PLAYERSTANDS.containsKey(event.getPlayer())) setNameVisible(event.getPlayer(), event.getPlayer().isSneaking());
+        setNameVisible(event.getPlayer(), !event.isSneaking());
     }
 
     @EventHandler
