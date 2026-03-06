@@ -1,8 +1,12 @@
 package me.gonkas.playernametags;
 
-import me.gonkas.playernametags.commands.*;
+import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.event.PacketListenerPriority;
+import me.gonkas.playernametags.commands.ConfigCommand;
+import me.gonkas.playernametags.commands.NameTagCommand;
 import me.gonkas.playernametags.handlers.ConfigHandler;
 import me.gonkas.playernametags.handlers.NameTagHandler;
+import me.gonkas.playernametags.handlers.PacketHandler;
 import me.gonkas.playernametags.util.Strings;
 import me.gonkas.playernametags.util.TextType;
 import org.bukkit.Bukkit;
@@ -84,6 +88,8 @@ public final class PlayerNameTags extends JavaPlugin {
         NameTagHandler.load();
 
         Bukkit.getPluginManager().registerEvents(new NameTagHandler(), INSTANCE);
+
+        PacketEvents.getAPI().getEventManager().registerListener(new PacketHandler(), PacketListenerPriority.NORMAL);
 
         consoleInfo("Loaded successfully.");
         PLUGINISLOADED = true;

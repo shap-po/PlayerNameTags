@@ -5,6 +5,8 @@ authors: [Gonkas77]
 main: me.gonkas.playernametags.PlayerNameTags
 api-version: '1.21'
 
+depend: [ "packetevents" ]
+
 commands:
   pntconfig:
     description: "Allows modifications to the plugin config through the game client."
