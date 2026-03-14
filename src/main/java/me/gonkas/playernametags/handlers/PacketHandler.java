@@ -18,10 +18,12 @@ public class PacketHandler implements PacketListener {
 
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if (message.toString().contains(player.getName())) {
+                    var nameWithoutFormatting = NameTagHandler.getFullName(player);
+                    nameWithoutFormatting = nameWithoutFormatting.replaceAll("§.", "");
                     message = message.replaceText(
                         TextReplacementConfig.builder()
                             .match(player.getName())
-                            .replacement(NameTagHandler.getFullName(player))
+                            .replacement(nameWithoutFormatting)
                             .build());
                     replaced = true;
                 }
