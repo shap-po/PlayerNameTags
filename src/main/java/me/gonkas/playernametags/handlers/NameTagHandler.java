@@ -17,6 +17,7 @@ import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -404,5 +405,9 @@ public class NameTagHandler implements Listener {
     public static void setHidden(String offline_player_name, boolean hidden) {
         if (OFFLINEPLAYERTOGGLE.containsKey(offline_player_name)) {OFFLINEPLAYERTOGGLE.replace(offline_player_name, hidden);}
         else {OFFLINEPLAYERTOGGLE.put(offline_player_name, hidden);}
+    }
+
+    public static @Nullable ArmorStand getArmorStand(Player player) {
+        return PLAYERSTANDS.get(player);
     }
 }
