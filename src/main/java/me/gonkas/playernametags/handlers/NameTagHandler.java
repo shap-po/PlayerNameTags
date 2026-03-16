@@ -122,6 +122,7 @@ public class NameTagHandler implements Listener {
         stand.setCustomNameVisible(true);
         stand.setVisible(false);
         stand.setGravity(false);
+        stand.setMarker(true);
 
         stand.getAttribute(Attribute.SCALE).setBaseValue(0.0625);
 
